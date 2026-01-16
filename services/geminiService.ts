@@ -8,7 +8,7 @@ const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 export const generateInfographicContent = async (topic: string): Promise<InfographicData> => {
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3-flash-preview',
       contents: `Generate content for an educational and engaging infographic about the following topic: "${topic}". 
       The tone should be professional yet accessible.
       Extract 4 to 6 key points.
@@ -49,14 +49,14 @@ export const generateInfographicContent = async (topic: string): Promise<Infogra
   }
 };
 
-export const generateHeaderImage = async (prompt: string): Promise<string | null> => {
+export const generateHeaderImage = async (topic: string): Promise<string | null> => {
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash-image',
       contents: {
         parts: [
           {
-             text: `Create a flat, vector-style, clean, modern, minimalist illustration suitable for an infographic header about: ${prompt}. 
+             text: `Create a flat, vector-style, clean, modern, minimalist illustration suitable for an infographic header about: ${topic}. 
              Use a limited color palette. No text in the image. White or transparent background preferred.`
           }
         ]
@@ -85,7 +85,7 @@ export const generateHeaderImage = async (prompt: string): Promise<string | null
 export const generateMindMapData = async (topic: string): Promise<MindMapNode> => {
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-3-flash-preview',
       contents: `Create a hierarchical mind map structure for the topic: "${topic}".
       The root node should be the topic itself.
       Create 3-4 main branches, and each branch should have 2-3 sub-nodes.
@@ -138,7 +138,7 @@ export const generateMindMapData = async (topic: string): Promise<MindMapNode> =
 export const generateAudioOverview = async (topic: string, contextData: string): Promise<string | null> => {
   // 1. Generate the script
   const scriptResponse = await ai.models.generateContent({
-    model: 'gemini-2.5-flash',
+    model: 'gemini-3-flash-preview',
     contents: `Write a short, engaging, podcast-style conversation script between two hosts (Host A and Host B) discussing the topic: "${topic}".
     Base it on this context: ${contextData}.
     The conversation should be natural, enthusiastic, and educational.
@@ -187,7 +187,7 @@ export const generateAudioOverview = async (topic: string, contextData: string):
 
 export const generateStudyData = async (topic: string): Promise<{ cards: Flashcard[], ideas: Idea[] }> => {
   const response = await ai.models.generateContent({
-    model: 'gemini-2.5-flash',
+    model: 'gemini-3-flash-preview',
     contents: `For the topic "${topic}", generate:
     1. 5 Flashcards (Question and Answer pairs) for a "Power Study" session.
     2. 4 "Spark Ideas" - creative, out-of-the-box applications or related concepts to spark thinking.`,
